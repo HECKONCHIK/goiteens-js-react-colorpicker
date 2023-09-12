@@ -2,6 +2,8 @@ import { Component } from "react";
 // import  GlobalStyle from "./GlobalStyle";
 import "../todo.json"
 import { TodoEditor } from "./TodoEditor/TodoEditor";
+import { Filter } from "./Filter/Filter";
+import { InfoBox } from "./App.styled";
 import TodoList from "./TodoList/TodoList";
 import { nanoid } from 'nanoid';
 import initialTodos from '../todo.json';
@@ -14,6 +16,7 @@ export class App extends Component {
   
   state={
     todos: initialTodos,
+    filter: ''
   }
  
   addTodo = (text)=>{
@@ -22,19 +25,70 @@ export class App extends Component {
       text,
       completed: false
     }
-    
-  this.setState((prevState)=>{
+
+    this.setState((prevState)=>{
     return {
       todos: [newTodo, ...prevState.todos]
     }
   })
   }
 
-  render(){
+    toggleCompleted = todoId => {
+      this.setState(({ todos }) => ({
+      todos: todos.map(todo =>
+        todo.id === todoId ? { ...todo, completed: !todo.completed } : todo,
+      ),
+    }));
+    };
+    
+    changeFilter = e => {
+    this.setState({ filter: e.currentTarget.value });
+    };
+    
+    getVisibleTodos = () => {
+    const { filter, todos } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+
+    return todos.filter(todo =>
+      todo.text.toLowerCase().includes(normalizedFilter),
+    );
+    };
+  
+    deleteTodo = todoId => {
+        this.setState(prevState => ({
+            todos: prevState.todos.filter(todo => todo.id !== todoId),
+        }));
+    };
+    
+  
+    calculateCompletedTodos = () => {
+    const { todos } = this.state;
+
+    return todos.reduce(
+      (total, todo) => (todo.completed ? total + 1 : total),
+      0,
+    );
+  };
+
+  render() {
+    const { todos, filter } = this.state;
+    const totalTodoCount = todos.length;
+    const completedTodoCount = this.calculateCompletedTodos();
+    const visibleTodos = this.getVisibleTodos();
     return (
       <>
-      <TodoEditor addTodo={this.addTodo}/>
-      <TodoList todos={this.state.todos}/>
+        <InfoBox>
+          <p>Вього завдань: {totalTodoCount}</p>
+          <p>Виконано: {completedTodoCount}</p>
+        </InfoBox>
+        <TodoEditor addTodo={this.addTodo} />
+        
+        <Filter value={filter} onChange={this.changeFilter} />
+
+        <TodoList todos={visibleTodos}
+                  onDeleteTodo={this.deleteTodo}
+                  onToggleCompleted={this.toggleCompleted}
+        />
       {/* <GlobalStyle/> */}
       </>
     );
