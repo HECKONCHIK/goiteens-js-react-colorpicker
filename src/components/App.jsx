@@ -68,7 +68,25 @@ export class App extends Component {
       (total, todo) => (todo.completed ? total + 1 : total),
       0,
     );
-  };
+    };
+  
+  componentDidMount() {
+    const todos = localStorage.getItem("todos");
+    const parsedTodos = JSON.parse(todos);
+
+    this.setState({
+      todos: parsedTodos
+    })
+  }
+  
+  componentDidUpdate(prevState, prevProps) {
+    
+    const {todos} = this.state
+    
+    if (prevState.todos !== todos) {
+      localStorage.setItem("todos", JSON.stringify(todos))
+    }
+  }
 
   render() {
     const { todos, filter } = this.state;

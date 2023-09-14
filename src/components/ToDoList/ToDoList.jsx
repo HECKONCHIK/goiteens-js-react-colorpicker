@@ -11,7 +11,7 @@ const TodoList = ({ todos, onDeleteTodo, onToggleCompleted }) => (
           onChange={() => onToggleCompleted(id)}
         />
         <Text completed={completed}>{text}</Text>
-        <Button onClick={() => this.prop.onDeleteTodo(id)}>Delete</Button>
+        <Button onClick={() => onDeleteTodo(id)}>Delete</Button>
       </Item>
     ))}
   </List>
