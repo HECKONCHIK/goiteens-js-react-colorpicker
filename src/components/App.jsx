@@ -9,6 +9,7 @@ import { nanoid } from 'nanoid';
 import initialTodos from '../todo.json';
 // import { StickerList } from "./Sticker/StickerList";
 // import stickers from "../sticker.json"
+import Modal from "./Modal/Modal"; 
  
 
 export class App extends Component {
@@ -16,7 +17,8 @@ export class App extends Component {
   
   state={
     todos: initialTodos,
-    filter: ''
+    filter: '',
+    isOpen: false
   }
  
   addTodo = (text)=>{
@@ -70,6 +72,10 @@ export class App extends Component {
     );
     };
   
+  toggleModal = () => {
+    this.setState((prevState => ({isOpen: !prevState.isOpen})))
+  }
+  
   componentDidMount() {
     const todos = localStorage.getItem("todos");
     const parsedTodos = JSON.parse(todos);
@@ -89,13 +95,17 @@ export class App extends Component {
   }
 
   render() {
-    const { todos, filter } = this.state;
-    const totalTodoCount = todos.length;
-    const completedTodoCount = this.calculateCompletedTodos();
-    const visibleTodos = this.getVisibleTodos();
+
+    // const { todos, filter } = this.state;
+    // const totalTodoCount = todos.length;
+    // const completedTodoCount = this.calculateCompletedTodos();
+    // const visibleTodos = this.getVisibleTodos();
     return (
       <>
-        <InfoBox>
+        <button type="button" onClick={this.toggleModal}>Open modal</button>
+        {this.state.isOpen && <Modal onClose={this.toggleModal} />} 
+
+        {/* <InfoBox>
           <p>Вього завдань: {totalTodoCount}</p>
           <p>Виконано: {completedTodoCount}</p>
         </InfoBox>
@@ -106,7 +116,7 @@ export class App extends Component {
         <TodoList todos={visibleTodos}
                   onDeleteTodo={this.deleteTodo}
                   onToggleCompleted={this.toggleCompleted}
-        />
+        /> */}
       {/* <GlobalStyle/> */}
       </>
     );
