@@ -1,15 +1,17 @@
 import { Component } from "react";
 // import  GlobalStyle from "./GlobalStyle";
+// import ColorPicker from "./Colorpicker/Colorpicker";
+// import { Sticker } from "./Sticker/Sticker";
 import "../todo.json"
-import { TodoEditor } from "./TodoEditor/TodoEditor";
-import { Filter } from "./Filter/Filter";
-import { InfoBox } from "./App.styled";
-import TodoList from "./TodoList/TodoList";
+// import { TodoEditor } from "./TodoEditor/TodoEditor";
+// import { Filter } from "./Filter/Filter";
+// import { InfoBox } from "./App.styled";
+// import TodoList from "./TodoList/TodoList";
 import { nanoid } from 'nanoid';
 import initialTodos from '../todo.json';
 // import { StickerList } from "./Sticker/StickerList";
 // import stickers from "../sticker.json"
-import Modal from "./Modal/Modal"; 
+// import Modal from "./Modal/Modal"; 
  
 
 export class App extends Component {
@@ -102,8 +104,10 @@ export class App extends Component {
     // const visibleTodos = this.getVisibleTodos();
     return (
       <>
-        <button type="button" onClick={this.toggleModal}>Open modal</button>
-        {this.state.isOpen && <Modal onClose={this.toggleModal} />} 
+        
+        {/* <ColorPicker/> */}
+        {/* <button type="button" onClick={this.toggleModal}>Open modal</button>
+        {this.state.isOpen && <Modal onClose={this.toggleModal} />}  */}
 
         {/* <InfoBox>
           <p>Вього завдань: {totalTodoCount}</p>

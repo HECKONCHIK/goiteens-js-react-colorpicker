@@ -1,25 +1,21 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { Container, Title, Option } from './ColorPicker.styled.jsx'
     
-export class ColorPicker extends Component {
+export const ColorPicker = () => {
+    const [currentOpttionIdx, setCurrentOpttionIdx] = useState(0);
 
-    state = {
-        currentOpttionIdx: 0 
+    const handleActive = (idx) => {
+        setCurrentOpttionIdx({currentOpttionIdx})
     }
 
-    handleActive = (idx) => {
-        this.setState({currentOpttionIdx: idx})
-    } 
-
-    render() {
-        return (
+return (
             <Container>
                 <Title>Color Picker</Title>
                 <div>
                     {this.props.options.map((option, idx) => {
                         return <Option key={option.label}
-                                       onClick={()=>{this.handleActive(idx)}}
-                                       currentidx={this.state.currentOpttionIdx}
+                                       onClick={()=>{handleActive(idx)}}
+                                       currentidx={currentOpttionIdx}
                                        idx={idx}
                                        backgroundColor={option.color}
                                         >{option.label}</Option>
@@ -27,7 +23,22 @@ export class ColorPicker extends Component {
                 </div>
             </Container>
         )
-    }
 }
+
+
+// export class ColorPicker extends Component {
+
+//     state = {
+//         currentOpttionIdx: 0 
+//     }
+
+//     handleActive = (idx) => {
+//         this.setState({currentOpttionIdx: idx})
+//     } 
+
+//     render() {
+        
+//     }
+// }
 
 export default ColorPicker;
